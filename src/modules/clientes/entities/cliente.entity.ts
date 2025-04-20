@@ -6,7 +6,7 @@ export class Cliente {
   id: number;
 
   @Column({ type: 'varchar', length: 100 })
-  name: string;
+  nombre: string;
 
   @Column({ type: 'varchar', length: 100 })
   email: string;
