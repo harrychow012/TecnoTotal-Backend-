@@ -7,6 +7,7 @@ import { TecnicosModule } from './modules/tecnicos/tecnicos.module';
 import { TecnicosService } from './modules/tecnicos/services/tecnicos.service';
 import { TecnicosController } from './modules/tecnicos/controllers/tecnicos.controller';
 import { Tecnico } from './modules/tecnicos/entities/tecnico.entity';
+import { ReparacionesModule } from './modules/reparaciones/reparaciones.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { Tecnico } from './modules/tecnicos/entities/tecnico.entity';
 
     TecnicosModule,
     TypeOrmModule.forFeature([Tecnico]),
+    ReparacionesModule,
   ],
   controllers: [
     ClientesController, // Registrar el controlador en el módulo
