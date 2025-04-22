@@ -1,9 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
+import { CreateReparacionDto } from '../dto/reparaciones.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Reparacion } from '../entities/reparaciones.entity';
-import { CreateReparacionDto } from '../dto/reparaciones.dto';
-import { InternalServerErrorException } from '@nestjs/common';
+
 @Injectable()
 export class ReparacionesService {
   constructor(
@@ -12,27 +16,31 @@ export class ReparacionesService {
   ) {}
 
   async create(createReparacionDto: CreateReparacionDto) {
-    const nuevaReparacion =
-      this.reparacionRepository.create(createReparacionDto);
-    return await this.reparacionRepository.save(nuevaReparacion);
+    try {
+      const reparacion = this.reparacionRepository.create(createReparacionDto);
+      console.log('Reparación antes de guardar:', reparacion);
+      await this.reparacionRepository.save(reparacion);
+      console.log('Reparación después de guardar:', reparacion);
+      return reparacion;
+    } catch (error) {
+      console.error('Error al crear la reparación:', error);
+      throw new InternalServerErrorException('Error al crear la reparación');
+    }
   }
 
   async findAll(page: number = 1, limit: number = 10) {
     try {
-      // Calcular el salto (skip) para la paginación
       const skip = (page - 1) * limit;
+      const [reparaciones, total] =
+        await this.reparacionRepository.findAndCount({
+          skip,
+          take: limit,
+        });
 
-      // Obtener los clientes con paginación
-      const [clientes, total] = await this.reparacionRepository.findAndCount({
-        skip, // Número de registros a saltar
-        take: limit, // Número de registros por página
-      });
-
-      // Calcular el número total de páginas
       const totalPages = Math.ceil(total / limit);
 
       return {
-        data: clientes,
+        data: reparaciones,
         pagination: {
           total,
           page,
@@ -41,30 +49,48 @@ export class ReparacionesService {
         },
       };
     } catch (error) {
-      console.error('Error al obtener los clientes:', error);
-      throw new InternalServerErrorException('Error al obtener los clientes');
+      console.error('Error al obtener las reparaciones:', error);
+      throw new InternalServerErrorException(
+        'Error al obtener las reparaciones',
+      );
     }
   }
 
   async findOne(id: number) {
-    const reparacion = await this.reparacionRepository.findOne({
-      where: { id },
-    });
-    if (!reparacion) {
-      throw new NotFoundException(`Reparación con ID ${id} no encontrada`);
+    try {
+      const reparacion = await this.reparacionRepository.findOne({
+        where: { id },
+      });
+      if (!reparacion) {
+        throw new NotFoundException(`Reparación con ID ${id} no encontrada`);
+      }
+      return reparacion;
+    } catch (error) {
+      console.error('Error al obtener la reparación:', error);
+      throw error;
     }
-    return reparacion;
   }
 
-  async update(id: number, updateData: Partial<CreateReparacionDto>) {
-    const reparacion = await this.findOne(id);
-    Object.assign(reparacion, updateData);
-    return await this.reparacionRepository.save(reparacion);
+  async update(id: number, updateReparacionDto: Partial<CreateReparacionDto>) {
+    try {
+      const reparacion = await this.findOne(id);
+      Object.assign(reparacion, updateReparacionDto);
+      await this.reparacionRepository.save(reparacion);
+      return reparacion;
+    } catch (error) {
+      console.error('Error al actualizar la reparación:', error);
+      throw error;
+    }
   }
 
   async remove(id: number) {
-    const reparacion = await this.findOne(id);
-    await this.reparacionRepository.remove(reparacion);
-    return { message: `Reparación con ID ${id} eliminada exitosamente` };
+    try {
+      const reparacion = await this.findOne(id);
+      await this.reparacionRepository.remove(reparacion);
+      return { message: `Reparación con ID ${id} eliminada exitosamente` };
+    } catch (error) {
+      console.error('Error al eliminar la reparación:', error);
+      throw error;
+    }
   }
 }
