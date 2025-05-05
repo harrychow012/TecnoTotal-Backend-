@@ -9,6 +9,7 @@ import { TecnicosController } from './modules/tecnicos/controllers/tecnicos.cont
 import { Tecnico } from './modules/tecnicos/entities/tecnico.entity';
 import { ReparacionesModule } from './modules/reparaciones/reparaciones.module';
 import { ProveedoresModule } from './modules/proveedores/proveedores.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { ProveedoresModule } from './modules/proveedores/proveedores.module';
     TypeOrmModule.forFeature([Tecnico]),
     ReparacionesModule,
     ProveedoresModule,
+    AuthModule,
   ],
   controllers: [
     ClientesController, // Registrar el controlador en el módulo
