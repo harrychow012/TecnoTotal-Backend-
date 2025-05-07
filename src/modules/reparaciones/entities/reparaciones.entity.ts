@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { User } from '../../../auth/entities/auth.entity';
 
 @Entity('reparaciones')
 export class Reparacion {
@@ -25,4 +32,9 @@ export class Reparacion {
 
   @Column({ type: 'date', nullable: true })
   fechaEntrega?: Date;
+
+  // Relación con la entidad User
+  @ManyToOne(() => User, (user) => user.reparaciones, { eager: true })
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }

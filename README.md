@@ -27,7 +27,7 @@
 
 ## Project setup
 
-```bash
+````bash
 1. Clonar el proyecto
 2. `npm install`
 3. Clonar el archivo `.env.template` y renombrarlo a `.env`
@@ -45,7 +45,7 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
-```
+````
 
 ## Run tests
 

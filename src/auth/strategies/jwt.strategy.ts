@@ -13,7 +13,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
 
-    configService: ConfigService,
+    configService: ConfigService
   ) {
     const jwtSecret = configService.get<string>('JWT_SECRET');
     if (!jwtSecret) {
@@ -36,7 +36,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
     if (!user.isActive)
       throw new UnauthorizedException(
-        'Usuario esta inactivo, comuniquese con el administrador',
+        'Usuario esta inactivo, comuniquese con el administrador'
       );
 
     return user;

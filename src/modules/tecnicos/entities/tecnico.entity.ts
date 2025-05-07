@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Reparacion } from '../../reparaciones/entities/reparaciones.entity';
 
 @Entity('tecnicos')
 export class Tecnico {
@@ -19,4 +20,7 @@ export class Tecnico {
 
   @Column({ default: true })
   activo: boolean;
+
+  @OneToMany(() => Reparacion, (reparacion) => reparacion.tecnicoAsignado)
+  reparaciones: Reparacion[]; // Relación con la entidad Reparacion
 }

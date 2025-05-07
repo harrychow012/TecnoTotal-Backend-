@@ -12,7 +12,7 @@ import { Cliente } from '../entities/cliente.entity';
 export class ClientesService {
   constructor(
     @InjectRepository(Cliente)
-    private readonly clienteRepository: Repository<Cliente>,
+    private readonly clienteRepository: Repository<Cliente>
   ) {}
 
   async create(createClienteDto: CreateClienteDto) {

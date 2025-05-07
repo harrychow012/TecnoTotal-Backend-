@@ -12,7 +12,7 @@ import { CreateProveedorDto } from '../dto/proveedores.dto';
 export class ProveedoresService {
   constructor(
     @InjectRepository(Proveedor)
-    private readonly proveedorRepository: Repository<Proveedor>,
+    private readonly proveedorRepository: Repository<Proveedor>
   ) {}
 
   async create(createProveedorDto: CreateProveedorDto) {
@@ -48,7 +48,7 @@ export class ProveedoresService {
     } catch (error) {
       console.error('Error al obtener los proveedores:', error);
       throw new InternalServerErrorException(
-        'Error al obtener los proveedores',
+        'Error al obtener los proveedores'
       );
     }
   }

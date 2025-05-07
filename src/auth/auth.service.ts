@@ -20,7 +20,7 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
 
-    private readonly jwtService: JwtService,
+    private readonly jwtService: JwtService
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -76,7 +76,7 @@ export class AuthService {
     }
 
     throw new InternalServerErrorException(
-      'Por favor chequea los logs del servidor',
+      'Por favor chequea los logs del servidor'
     );
   }
 }

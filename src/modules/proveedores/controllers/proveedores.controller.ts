@@ -18,7 +18,7 @@ export class ProveedoresController {
   @Get()
   getAllProveedores(
     @Query('page') page = 1,
-    @Query('limit') limit = 10, // Número de resultados por página
+    @Query('limit') limit = 10 // Número de resultados por página
   ) {
     return this.proveedoresService.findAll(Number(page), Number(limit));
   }
@@ -36,7 +36,7 @@ export class ProveedoresController {
   @Patch(':id')
   update(
     @Param('id') id: number,
-    @Body() updateData: Partial<CreateProveedorDto>,
+    @Body() updateData: Partial<CreateProveedorDto>
   ) {
     return this.proveedoresService.update(id, updateData);
   }
