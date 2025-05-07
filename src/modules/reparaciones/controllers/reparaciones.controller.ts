@@ -18,7 +18,7 @@ export class ReparacionesController {
   @Get()
   getAllClientes(
     @Query('page') page = 1, // Página actual (por defecto es 1)
-    @Query('limit') limit = 10, // Número de resultados por página (por defecto es 10)
+    @Query('limit') limit = 10 // Número de resultados por página (por defecto es 10)
   ) {
     return this.reparacionesService.findAll(Number(page), Number(limit));
   }
@@ -36,7 +36,7 @@ export class ReparacionesController {
   @Patch(':id')
   update(
     @Param('id') id: number,
-    @Body() updateData: Partial<CreateReparacionDto>,
+    @Body() updateData: Partial<CreateReparacionDto>
   ) {
     return this.reparacionesService.update(id, updateData);
   }

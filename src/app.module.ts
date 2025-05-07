@@ -10,6 +10,7 @@ import { Tecnico } from './modules/tecnicos/entities/tecnico.entity';
 import { ReparacionesModule } from './modules/reparaciones/reparaciones.module';
 import { ProveedoresModule } from './modules/proveedores/proveedores.module';
 import { AuthModule } from './auth/auth.module';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { AuthModule } from './auth/auth.module';
     ReparacionesModule,
     ProveedoresModule,
     AuthModule,
+    SeedModule,
   ],
   controllers: [
     ClientesController, // Registrar el controlador en el módulo

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Param,
+  Body,
+} from '@nestjs/common';
 import { TecnicosService } from '../services/tecnicos.service';
 import { Tecnico } from '../entities/tecnico.entity';
 
@@ -24,7 +32,7 @@ export class TecnicosController {
   @Put(':id')
   async update(
     @Param('id') id: number,
-    @Body() updateData: Partial<Tecnico>,
+    @Body() updateData: Partial<Tecnico>
   ): Promise<Tecnico> {
     return await this.tecnicosService.update(id, updateData);
   }

@@ -12,7 +12,7 @@ import { Reparacion } from '../entities/reparaciones.entity';
 export class ReparacionesService {
   constructor(
     @InjectRepository(Reparacion)
-    private readonly reparacionRepository: Repository<Reparacion>,
+    private readonly reparacionRepository: Repository<Reparacion>
   ) {}
 
   async create(createReparacionDto: CreateReparacionDto) {
@@ -51,7 +51,7 @@ export class ReparacionesService {
     } catch (error) {
       console.error('Error al obtener las reparaciones:', error);
       throw new InternalServerErrorException(
-        'Error al obtener las reparaciones',
+        'Error al obtener las reparaciones'
       );
     }
   }

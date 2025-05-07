@@ -7,7 +7,7 @@ import { Tecnico } from '../entities/tecnico.entity';
 export class TecnicosService {
   constructor(
     @InjectRepository(Tecnico)
-    private readonly tecnicoRepository: Repository<Tecnico>,
+    private readonly tecnicoRepository: Repository<Tecnico>
   ) {}
 
   async create(tecnicoData: Partial<Tecnico>): Promise<Tecnico> {

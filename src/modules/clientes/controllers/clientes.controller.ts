@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { CreateClienteDto } from '../dto/cliente.dto';
 import { ClientesService } from '../services/clientes.service';
+import { Auth } from '../../../auth/decorators/auth.decorator'; // Importa el decorador de autenticación
 
 @Controller('clientes')
 export class ClientesController {
@@ -17,6 +18,7 @@ export class ClientesController {
 
   // Método modificado para soportar paginación
   @Get()
+  @Auth()
   getAllClientes(
     @Query('page') page = 1, // Página actual (por defecto es 1)
     @Query('limit') limit = 10, // Número de resultados por página (por defecto es 10)

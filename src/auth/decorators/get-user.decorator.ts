@@ -10,8 +10,8 @@ export const GetUser = createParamDecorator((data, ctx: ExecutionContext) => {
 
   if (!user)
     throw new InternalServerErrorException(
-      'No existe el usuario en la petición (request)',
+      'No existe el usuario en la petición (request)'
     );
 
-  return user;
+  return !data ? user : user[data];
 });
