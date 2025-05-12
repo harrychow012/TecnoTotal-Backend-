@@ -1,12 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Reparacion } from './entities/reparaciones.entity';
 import { ReparacionesService } from './services/reparaciones.service';
-import { ReparacionesController } from './controllers/reparaciones.controller';
+import { Reparacion } from './entities/reparaciones.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Reparacion])],
   providers: [ReparacionesService],
-  controllers: [ReparacionesController],
+  exports: [ReparacionesService], // Exporta el servicio para que otros módulos puedan usarlo
 })
 export class ReparacionesModule {}
