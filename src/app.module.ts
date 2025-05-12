@@ -11,6 +11,7 @@ import { ReparacionesModule } from './modules/reparaciones/reparaciones.module';
 import { ProveedoresModule } from './modules/proveedores/proveedores.module';
 import { AuthModule } from './auth/auth.module';
 import { SeedModule } from './seed/seed.module';
+import { ExcelModule } from './excel/excel.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { SeedModule } from './seed/seed.module';
     ProveedoresModule,
     AuthModule,
     SeedModule,
+    ExcelModule,
   ],
   controllers: [
     ClientesController, // Registrar el controlador en el módulo

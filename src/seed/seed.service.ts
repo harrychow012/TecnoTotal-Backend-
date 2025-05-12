@@ -1,26 +1,33 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSeedDto } from './dto/create-seed.dto';
-import { UpdateSeedDto } from './dto/update-seed.dto';
+import { User } from '../auth/entities/auth.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { seedUsers } from './seed-data';
 
 @Injectable()
 export class SeedService {
-  create(createSeedDto: CreateSeedDto) {
-    return 'This action adds a new seed';
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) {}
+
+  async runSeed() {
+    await this.insertUsers();
   }
 
-  findAll() {
-    return `This action returns all seed`;
-  }
+  private async insertUsers() {
+    const users = await this.userRepository.find();
+    if (users.length > 0) {
+      console.log('Seed: Los usuarios ya existen en la base de datos');
+      return;
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} seed`;
-  }
+    const hashedUsers = seedUsers.map((user) => ({
+      ...user,
+      password: user.password, // Ya está hasheada en seed-data.ts
+    }));
 
-  update(id: number, updateSeedDto: UpdateSeedDto) {
-    return `This action updates a #${id} seed`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} seed`;
+    await this.userRepository.save(hashedUsers);
+    console.log('Seed: Usuarios insertados correctamente');
   }
 }

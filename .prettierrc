@@ -1,9 +1,6 @@
 {
   "singleQuote": true,
-  "trailingComma": "es5",
+  "trailingComma": "all",
   "endOfLine": "lf",
-  "insertPragma": false,
-  "rules": {
-    "prettier/prettier": ["error", { "endOfLine": "lf" }]
-  }
+  "semi": true
 }
