@@ -7,12 +7,15 @@ import { CreateReparacionDto } from '../dto/reparaciones.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Reparacion } from '../entities/reparaciones.entity';
+import { User } from '../../../auth/entities/auth.entity'; // Asegúrate de importar la entidad User
 
 @Injectable()
 export class ReparacionesService {
   constructor(
     @InjectRepository(Reparacion)
     private readonly reparacionRepository: Repository<Reparacion>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>, // Agrega esta línea
   ) {}
 
   async create(createReparacionDto: CreateReparacionDto) {
@@ -35,7 +38,7 @@ export class ReparacionesService {
         await this.reparacionRepository.findAndCount({
           skip,
           take: limit,
-          relations: ['user'], // Incluye la relación con el usuario si es necesario
+          relations: ['user', 'cliente'], // Incluye la relación con el usuario y cliente
         });
 
       const totalPages = Math.ceil(total / limit);
@@ -91,6 +94,20 @@ export class ReparacionesService {
       return { message: `Reparación con ID ${id} eliminada exitosamente` };
     } catch (error) {
       console.error('Error al eliminar la reparación:', error);
+      throw error;
+    }
+  }
+
+  // Ejemplo usando TypeORM Repository
+  async findUserWithRepairs(userId: number) {
+    try {
+      const user = await this.userRepository.findOne({
+        where: { id: userId },
+        relations: ['reparaciones'],
+      });
+      return user;
+    } catch (error) {
+      console.error('Error al obtener el usuario con reparaciones:', error);
       throw error;
     }
   }

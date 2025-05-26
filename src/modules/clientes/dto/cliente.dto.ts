@@ -1,36 +1,27 @@
-import {
-  IsBoolean,
-  IsDateString,
-  IsOptional,
-  IsString,
-  Length,
-} from 'class-validator';
+import { IsEmail, IsOptional, IsString, Length } from 'class-validator';
 
 export class CreateClienteDto {
   @IsString()
   @Length(3, 100)
-  nombre: string;
-
-  @IsString()
-  @Length(3, 100)
-  email: string;
+  Nombre: string;
 
   @IsString()
   @Length(5, 15)
-  phoneNumber: string;
+  Telefono: string;
 
   @IsString()
   @Length(3, 255)
-  address: string;
+  Direccion: string;
 
-  @IsDateString()
-  dateOfBirth: string;
-
-  @IsBoolean()
-  @IsOptional()
-  isActive?: boolean;
+  @IsEmail()
+  @Length(3, 100)
+  Email: string;
 
   @IsString()
   @IsOptional()
-  notes?: string;
+  Historial_compras?: string;
+
+  @IsString()
+  @IsOptional()
+  Historial_reparaciones?: string;
 }

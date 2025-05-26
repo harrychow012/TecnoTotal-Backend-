@@ -6,6 +6,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { User } from '../../../auth/entities/auth.entity';
+import { Cliente } from '../../clientes/entities/cliente.entity';
 
 @Entity('reparaciones')
 export class Reparacion {
@@ -33,8 +34,11 @@ export class Reparacion {
   @Column({ type: 'date', nullable: true })
   fechaEntrega?: Date;
 
-  // Relación con la entidad User
-  @ManyToOne(() => User, (user) => user.reparaciones, { eager: true })
-  @JoinColumn({ name: 'user_id' })
+  // Relación con la entidad Cliente
+  @ManyToOne(() => Cliente, (cliente) => cliente.reparaciones)
+  cliente: Cliente;
+
+  // O si es con User:
+  @ManyToOne(() => User, (user) => user.reparaciones)
   user: User;
 }

@@ -8,6 +8,7 @@ import {
   Delete,
   Query, // Importante para manejar los parámetros de la consulta
 } from '@nestjs/common';
+import { ValidRoles } from '../../../auth/interfaces'; // Importa los roles válidos
 import { CreateClienteDto } from '../dto/cliente.dto';
 import { ClientesService } from '../services/clientes.service';
 import { Auth } from '../../../auth/decorators/auth.decorator'; // Importa el decorador de autenticación
@@ -18,7 +19,7 @@ export class ClientesController {
 
   // Método modificado para soportar paginación
   @Get()
-  @Auth()
+  @Auth(ValidRoles.admin)
   getAllClientes(
     @Query('page') page = 1, // Página actual (por defecto es 1)
     @Query('limit') limit = 10, // Número de resultados por página (por defecto es 10)
@@ -26,9 +27,9 @@ export class ClientesController {
     return this.clientesService.findAll(Number(page), Number(limit));
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: number) {
-    return this.clientesService.findOne(id);
+  @Get(':clientes_id')
+  findOne(@Param('clientes_id') clientes_id: number) {
+    return this.clientesService.findOne(Number(clientes_id));
   }
 
   @Post()
@@ -36,16 +37,16 @@ export class ClientesController {
     return this.clientesService.create(createClienteDto);
   }
 
-  @Patch(':id')
+  @Patch(':clientes_id')
   updateCliente(
-    @Param('id') id: number,
+    @Param('clientes_id') clientes_id: number,
     @Body() updateClienteDto: Partial<CreateClienteDto>,
   ) {
-    return this.clientesService.update(id, updateClienteDto);
+    return this.clientesService.update(Number(clientes_id), updateClienteDto);
   }
 
-  @Delete(':id')
-  removeCliente(@Param('id') id: number) {
-    return this.clientesService.remove(id);
+  @Delete(':clientes_id')
+  removeCliente(@Param('clientes_id') clientes_id: number) {
+    return this.clientesService.remove(Number(clientes_id));
   }
 }

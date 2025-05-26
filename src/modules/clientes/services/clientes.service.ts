@@ -57,11 +57,11 @@ export class ClientesService {
     }
   }
 
-  async findOne(id: number) {
+  async findOne(clientes_id: number) {
     try {
-      const cliente = await this.clienteRepository.findOne({ where: { id } });
+      const cliente = await this.clienteRepository.findOne({ where: { clientes_id } });
       if (!cliente) {
-        throw new NotFoundException(`Cliente con ID ${id} no encontrado`);
+        throw new NotFoundException(`Cliente con ID ${clientes_id} no encontrado`);
       }
       return cliente;
     } catch (error) {
@@ -70,9 +70,9 @@ export class ClientesService {
     }
   }
 
-  async update(id: number, updateClienteDto: Partial<CreateClienteDto>) {
+  async update(clientes_id: number, updateClienteDto: Partial<CreateClienteDto>) {
     try {
-      const cliente = await this.findOne(id);
+      const cliente = await this.findOne(clientes_id);
       Object.assign(cliente, updateClienteDto);
       await this.clienteRepository.save(cliente);
       return cliente;
@@ -82,11 +82,11 @@ export class ClientesService {
     }
   }
 
-  async remove(id: number) {
+  async remove(clientes_id: number) {
     try {
-      const cliente = await this.findOne(id);
+      const cliente = await this.findOne(clientes_id);
       await this.clienteRepository.remove(cliente);
-      return { message: `Cliente con ID ${id} eliminado exitosamente` };
+      return { message: `Cliente con ID ${clientes_id} eliminado exitosamente` };
     } catch (error) {
       console.error('Error al eliminar el cliente:', error);
       throw error;

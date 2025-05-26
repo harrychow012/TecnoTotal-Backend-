@@ -1,28 +1,29 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Reparacion } from '../../reparaciones/entities/reparaciones.entity';
 
-@Entity('cliente') // Nombre de la tabla
+@Entity('cliente')
 export class Cliente {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn({ name: 'clientes_id' })
+  clientes_id: number;
 
-  @Column({ type: 'varchar', length: 100 })
-  nombre: string;
+  @Column({ name: 'Nombre', type: 'varchar', length: 100 })
+  Nombre: string;
 
-  @Column({ type: 'varchar', length: 100 })
-  email: string;
+  @Column({ name: 'Telefono', type: 'varchar', length: 15 })
+  Telefono: string;
 
-  @Column({ type: 'varchar', length: 15 })
-  phoneNumber: string;
+  @Column({ name: 'Direccion', type: 'varchar', length: 255 })
+  Direccion: string;
 
-  @Column({ type: 'varchar', length: 255 })
-  address: string;
+  @Column({ name: 'Email', type: 'varchar', length: 100 })
+  Email: string;
 
-  @Column({ type: 'date' })
-  dateOfBirth: string;
+  @Column({ name: 'Historial_compras', type: 'text', nullable: true })
+  Historial_compras?: string;
 
-  @Column({ type: 'boolean', default: true })
-  isActive: boolean;
+  @Column({ name: 'Historial_reparaciones', type: 'text', nullable: true })
+  Historial_reparaciones?: string;
 
-  @Column({ type: 'text', nullable: true })
-  notes?: string;
+  @OneToMany(() => Reparacion, (reparacion) => reparacion.cliente)
+  reparaciones: Reparacion[];
 }
