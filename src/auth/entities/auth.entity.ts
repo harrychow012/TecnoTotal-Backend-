@@ -34,7 +34,7 @@ export class User {
   roles: string[];
 
   @OneToMany(() => Reparacion, (reparacion) => reparacion.user)
-  reparaciones: Reparacion[]; // Relación con la entidad Reparacion
+  reparaciones: Reparacion[];
 
   @BeforeInsert()
   checkFieldsBeforeInsert() {
